@@ -1,20 +1,22 @@
 // Object structures for application data
 
 export const Show = {
-    id: "",         // Show ID
-    title: "",      // Show title
-    image: "",      // Show image URL
-    genreId: "",    // Genre ID
+    id: "string",         // Show ID
+    title: "string",      // Show title
+    image: "string",      // Show image URL
+    genreId: "string",    // Genre ID
 };
 
 export const Episode = {
-    id: "",          // Episode ID
-    title: "",       // Episode title
-    audioUrl: "",    // Episode audio URL
-    showId: "",      // Associated show ID
+    id: "string",          // Episode ID
+    title: "string",       // Episode title
+    audioUrl: "string",    // Episode audio URL
+    showId: "string",      // Associated show ID
 };
 
 export const Genre = {
-    id: "",          // Genre ID
-    name: "",        // Genre name
+    id: "string",          // Genre ID
+    name: "string",        // Genre name
 };
+
+
