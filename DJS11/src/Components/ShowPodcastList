@@ -1,0 +1,12 @@
+import React from 'react';
+
+const ShowPodcastList = () => {
+    return (
+        <div>
+            <h2>Podcast Shows</h2>
+            {/* Add code to display the list of shows */}
+        </div>
+    );
+};
+
+export default ShowPodcastList;
