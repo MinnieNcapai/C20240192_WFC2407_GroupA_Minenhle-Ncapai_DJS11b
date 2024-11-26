@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
 const GenreFilter = ({ genres, onSelectGenre }) => {
     return (
@@ -7,17 +7,16 @@ const GenreFilter = ({ genres, onSelectGenre }) => {
             <select onChange={(e) => onSelectGenre(e.target.value)}>
                 <option value="">All Genres</option>
                 {genres.map(genre => (
-                    <option key={genre} value={genre}>{genre}</option>
+                    <option key={genre.id} value={genre.id}>{genre.title}</option>
                 ))}
             </select>
         </div>
     );
 };
 
-// Prop validation
 GenreFilter.propTypes = {
-    genres: PropTypes.array.isRequired,  // Expecting an array for genres
-    onSelectGenre: PropTypes.func.isRequired, // Expecting a function for onSelectGenre
+    genres: PropTypes.array.isRequired,
+    onSelectGenre: PropTypes.func.isRequired,
 };
 
 export default GenreFilter;
