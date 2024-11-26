@@ -1,10 +1,49 @@
-import 'react';
+import  { useEffect, useState } from 'react';
+import { fetchPreviews } from '../api';
+import GenreFilter from  './GenreFilter'
 
 const ShowPodcastList = () => {
+    const [shows, setShows] = useState([]);  // Stores all shows
+    const [filteredShows, setFilteredShows] = useState([]); // Stores filtered shows
+    const [error, setError] = useState(null); // Error state for handling fetch errors
+    
+    
+    useEffect(() => {
+        const getShows = async () => {
+            try {
+                const previews = await fetchPreviews();
+                setShows(previews);
+                setFilteredShows(previews);
+            } catch (error) {
+                setError("Loading failed. Please try again later.");
+            }
+             
+        };
+
+        getShows();
+    }, []);
+
+    const handleSelectGenre = (genreId) => {
+        if (genreId) {
+            setFilteredShows(shows.filter(show => show.genreId === genreId));
+        } else {
+            setFilteredShows(shows); // Reset to all shows
+        }
+    };
+
     return (
         <div>
-            <h2>Podcast Shows</h2>
-            {/* Add code to display the list of shows */}
+            <GenreFilter genres={[]} onSelectGenre={handleSelectGenre} />
+            {error ? (
+                <p>{error}</p> // Show error message if fetching fails
+            ) : (
+                filteredShows.map(show => (
+                    <div key={show.id} className="show-item">
+                        <h2>{show.title}</h2>
+                        <img src={show.image} alt={show.title} />
+                    </div>
+                ))
+            )}
         </div>
     );
 };
