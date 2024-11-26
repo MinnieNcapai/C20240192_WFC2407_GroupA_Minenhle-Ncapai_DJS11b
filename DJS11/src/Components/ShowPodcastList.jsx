@@ -14,7 +14,7 @@ const ShowPodcastList = () => {
                 const previews = await fetchPreviews();
                 setShows(previews);
                 setFilteredShows(previews);
-            } catch (error) {
+            } catch {
                 setError("Loading failed. Please try again later.");
             }
              

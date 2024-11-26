@@ -1,4 +1,5 @@
-import React from 'react';
+import 'react';
+import PropTypes from 'prop-types'; // Import PropTypes
 
 const GenreFilter = ({ genres, onSelectGenre }) => {
     return (
@@ -12,6 +13,12 @@ const GenreFilter = ({ genres, onSelectGenre }) => {
             </select>
         </div>
     );
+};
+
+// Prop validation
+GenreFilter.propTypes = {
+    genres: PropTypes.array.isRequired,  // Expecting an array for genres
+    onSelectGenre: PropTypes.func.isRequired, // Expecting a function for onSelectGenre
 };
 
 export default GenreFilter;

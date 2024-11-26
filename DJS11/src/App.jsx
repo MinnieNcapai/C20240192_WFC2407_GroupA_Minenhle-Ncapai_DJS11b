@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ShowPodcastList from './Components/ShowPodcastList'; // Component for displaying the list of podcasts
-import FavoriteEpisodes from './Components/FavouriteEpisodes'; // Component for displaying favorite episodes
+import FavoriteEpisodes from './Components/FavoriteEpisodes'; // Component for displaying favorite episodes
 import FeaturedShows from './Components/FeaturedShows'; // Component for displaying recommended/featured shows
 import GenreFilter from './Components/GenreFilter'; // Component for filtering shows by genre
 import { fetchRecommendedShows } from './api'; // Function to fetch recommended shows from the API
