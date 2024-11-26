@@ -1,4 +1,3 @@
-import 'react';
 import PropTypes from 'prop-types'; // Import PropTypes
 
 const GenreFilter = ({ genres, onSelectGenre }) => {
