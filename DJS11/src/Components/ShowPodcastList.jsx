@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import { fetchPreviews } from '../api';
 import GenreFilter from './GenreFilter';
 
-const ShowPodcastList = () => {
-    const [shows, setShows] = useState([]);  // Stores all shows
-    const [filteredShows, setFilteredShows] = useState([]); // Stores filtered shows
-    const [error, setError] = useState(null); // Error state for handling fetch errors
-    const [genres, setGenres] = useState([]); // List of genres for filtering
+const ShowPodcastList = ({ genres }) => {
+    const [shows, setShows] = useState([]);  // All shows
+    const [filteredShows, setFilteredShows] = useState([]); // Filtered shows
+    const [loading, setLoading] = useState(true); // Loading state
 
     useEffect(() => {
         const getShows = async () => {
@@ -14,19 +13,18 @@ const ShowPodcastList = () => {
                 const previews = await fetchPreviews();
                 setShows(previews);
                 setFilteredShows(previews);
-                const uniqueGenres = [...new Set(previews.map(show => show.genre))]; // Extract unique genres
-                setGenres(uniqueGenres); // Set genres once they are extracted
-            } catch {
-                setError("Loading failed. Please try again later.");
+            } catch (error) {
+                console.error("Error fetching shows:", error);
+            } finally {
+                setLoading(false);
             }
         };
-
         getShows();
     }, []);
 
     const handleSelectGenre = (genreId) => {
         if (genreId) {
-            setFilteredShows(shows.filter(show => show.genreId === genreId));
+            setFilteredShows(shows.filter(show => show.genreIds.includes(parseInt(genreId))));
         } else {
             setFilteredShows(shows); // Reset to all shows
         }
@@ -35,15 +33,18 @@ const ShowPodcastList = () => {
     return (
         <div>
             <GenreFilter genres={genres} onSelectGenre={handleSelectGenre} />
-            {error ? (
-                <p>{error}</p> // Show error message if fetching fails
+            {loading ? (
+                <p>Loading shows...</p>
             ) : (
-                filteredShows.map(show => (
-                    <div key={show.id} className="show-item">
-                        <h2>{show.title}</h2>
-                        <img src={show.image} alt={show.title} />
-                    </div>
-                ))
+                <div className="show-list">
+                    {filteredShows.map(show => (
+                        <div key={show.id} className="show-item">
+                            <h2>{show.title}</h2>
+                            <img src={show.image} alt={show.title} />
+                            <p>Genres: {show.genreIds.map(id => genres.find(genre => genre.id === id)?.title).join(', ')}</p>
+                        </div>
+                    ))}
+                </div>
             )}
         </div>
     );
