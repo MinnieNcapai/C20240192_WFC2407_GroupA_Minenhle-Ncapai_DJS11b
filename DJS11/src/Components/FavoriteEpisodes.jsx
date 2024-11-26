@@ -1,32 +1,32 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types'; // Import PropTypes
 
-function FavoriteEpisodes({ favorites, toggleFavorite }) {
-    if (favorites.length === 0) {
-        return <div>No favorite shows yet!</div>;
-    }
+const FavoriteEpisodes = () => {
+    const [favorites, setFavorites] = useState(() => JSON.parse(localStorage.getItem('favorites')) || []);
+
+    const toggleFavorite = (episode) => {
+        const updatedFavorites = favorites.some(fav => fav.id === episode.id)
+            ? favorites.filter(fav => fav.id !== episode.id)
+            : [...favorites, episode];
+        setFavorites(updatedFavorites);
+        localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    };
+
+    if (favorites.length === 0) return <p>No favorite episodes yet!</p>;
 
     return (
         <div>
-            <h2>Favorite Shows</h2>
+            <h2>Favorite Episodes</h2>
             <ul>
-                {favorites.map(show => (
-                    <li key={show.id}>
-                        <Link to={`/show/${show.id}`}>
-                            {show.title}
-                        </Link>
-                        <button onClick={() => toggleFavorite(show)}>Remove from Favorites</button>
+                {favorites.map(episode => (
+                    <li key={episode.id}>
+                        <Link to={`/show/${episode.showId}`}>{episode.title}</Link>
+                        <button onClick={() => toggleFavorite(episode)}>Remove from Favorites</button>
                     </li>
                 ))}
             </ul>
         </div>
     );
-}
-
-// PropTypes validation
-FavoriteEpisodes.propTypes = {
-    favorites: PropTypes.array.isRequired,  // Expecting an array for favorites
-    toggleFavorite: PropTypes.func.isRequired, // Expecting a function for toggleFavorite
 };
 
 export default FavoriteEpisodes;
